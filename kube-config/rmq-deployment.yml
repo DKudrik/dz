@@ -12,6 +12,7 @@ spec:
       labels:
         components: rmq
     spec:
+      hostname: rmq
       containers:
         - name: rmq
           image: rabbitmq:3.12-management
@@ -19,9 +20,9 @@ spec:
             - containerPort: 5672
             - containerPort: 15672
           env:
-          - name: RABBITMQ_DEFAULT_USER
+          - name: SEED_USERNAME
             value: "admin"
-          - name: RABBITMQ_DEFAULT_PASS
+          - name: SEED_USER_PASSWORD
             value: "password"
           volumeMounts:
             - name: rabbitmq-storage
