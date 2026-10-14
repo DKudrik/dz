@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rmq-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      components: rmq
+  template:
+    metadata:
+      labels:
+        components: rmq
+    spec:
+      containers:
+        - name: rmq
+          image: rabbitmq:3.12-management
+          ports:
+            - containerPort: 5672
+            - containerPort: 15672
+          env:
+          - name: RABBITMQ_DEFAULT_USER
+            value: "admin"
+          - name: RABBITMQ_DEFAULT_PASS
+            value: "password"
+          volumeMounts:
+            - name: rabbitmq-storage
+              mountPath: /var/lib/rabbitmq
+
+      volumes:
+      - name: rabbitmq-storage
+        persistentVolumeClaim:
+          claimName: rmq-pvc
