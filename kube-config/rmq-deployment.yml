@@ -20,10 +20,16 @@ spec:
             - containerPort: 5672
             - containerPort: 15672
           env:
-          - name: SEED_USERNAME
-            value: "admin"
-          - name: SEED_USER_PASSWORD
-            value: "password"
+            - name: SEED_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: rmq-secret
+                  key: SEED_USERNAME
+            - name: SEED_USER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: rmq-secret
+                  key: SEED_PASSWORD
           volumeMounts:
             - name: rabbitmq-storage
               mountPath: /var/lib/rabbitmq
