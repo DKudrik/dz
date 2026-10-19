@@ -14,40 +14,20 @@ spec:
             path: "/api"
             backend:
               service:
-                name: short-api-cluster
+                name: conv-api-clusterip
                 port:
                   number: 3000
           - pathType: Prefix
             path: "/"
             backend:
               service:
-                name: short-app-clusterip
+                name: conv-app-clusterip
                 port:
                   number: 80
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: favicon-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /vite.svg
-spec:
-  ingressClassName: nginx
-  rules:
-    - host: conv.test
-      http:
-        paths:
-          - pathType: Exact
-            path: "/favicon.ico"
+          - pathType: Prefix
+            path: "/uploads"
             backend:
               service:
-                name: short-app-clusterip
+                name: conv-api-clusterip
                 port:
-                  number: 80
-          - pathType: Exact
-            path: "/api/favicon.ico"
-            backend:
-              service:
-                name: short-app-clusterip
-                port:
-                  number: 80
+                  number: 3000

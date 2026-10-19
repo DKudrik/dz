@@ -7,32 +7,29 @@ spec:
   selector:
     matchLabels:
       app: backend
-    template:
-      metadata:
-        labels:
-          app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
     spec:
       containers:
         - name: conv-api
-          image: antonlarichev/conb-api:v1.0
+          image: antonlarichev/conv-api:1.0
           imagePullPolicy: IfNotPresent
           ports:
-            - containers: 3000
+            - containerPort: 3000
           resources:
             limits:
               memory: "500Mi"
               cpu: "200m"
-          env:
-            - name: DATABASE_URL
-              valueFrom:
-                secretKeyRef:
-                  name: conv-api-secret
-                  key: DATABASE_URL
+          envFrom:
+            - secretRef:
+                name: conv-api-secret
           volumeMounts: 
             - name: api-storage
               mountPath: /opt/app/uploads
-    volumes:
-    - name: api-storage
-      persistentVolumeClaim:
-        claimName: api-pvc
+      volumes:
+      - name: api-storage
+        persistentVolumeClaim:
+          claimName: conv-api-pvc
 

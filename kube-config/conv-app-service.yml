@@ -8,4 +8,4 @@ spec:
     - port: 80
       protocol: TCP
   selector:
-    components: frontend
+    app: frontend
