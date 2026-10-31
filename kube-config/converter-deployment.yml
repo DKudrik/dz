@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: convverter-deployment
 spec:
-  replicas: 1
+  replicas: 5
   selector: 
     matchLabels:
       app: converter
@@ -17,7 +17,7 @@ spec:
           image: antonlarichev/conv-service:1.0
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 80
+            - containerPort: 3000
           resources:
             limits:
               memory: "512Mi"
