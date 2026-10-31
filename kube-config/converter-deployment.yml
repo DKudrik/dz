@@ -22,16 +22,9 @@ spec:
             limits:
               memory: "512Mi"
               cpu: "500m"
-      envFrom:
-        - configMapRef:
-          name: demo-config
-        - secretRef:
-          name: conv-api-secret
-      volumeMounts:
-        - name: test
-          mountPath: /etc/test
-          readOnly: true
-    volumes:
-      - name: test
-        configMap:
-          name: demo-config
+          envFrom:
+            - configMapRef:
+                name: demo-config
+            - secretRef:
+                name: converter-secret
+
