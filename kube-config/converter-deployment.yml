@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: converter
-          image: antonlarichev/conv-app:1.2
+          image: antonlarichev/conv-service:1.0
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
@@ -22,3 +22,16 @@ spec:
             limits:
               memory: "512Mi"
               cpu: "500m"
+      envFrom:
+        - configMapRef:
+          name: demo-config
+        - secretRef:
+          name: conv-api-secret
+      volumeMounts:
+        - name: test
+          mountPath: /etc/test
+          readOnly: true
+    volumes:
+      - name: test
+        configMap:
+          name: demo-config
