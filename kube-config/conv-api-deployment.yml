@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: conv-api-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: conv-api
+          image: antonlarichev/conv-api:1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          resources:
+            limits:
+              memory: "500Mi"
+              cpu: "200m"
+          envFrom:
+            - secretRef:
+                name: conv-api-secret
+          volumeMounts: 
+            - name: api-storage
+              mountPath: /opt/app/uploads
+      volumes:
+      - name: api-storage
+        persistentVolumeClaim:
+          claimName: conv-api-pvc
+

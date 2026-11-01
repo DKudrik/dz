@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: convverter-deployment
+spec:
+  replicas: 5
+  selector: 
+    matchLabels:
+      app: converter
+  template:
+    metadata: 
+      labels:
+        app: converter
+    spec:
+      containers:
+        - name: converter
+          image: antonlarichev/conv-service:1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          envFrom:
+            - configMapRef:
+                name: demo-config
+            - secretRef:
+                name: converter-secret
+
