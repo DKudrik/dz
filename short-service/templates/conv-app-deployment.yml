@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app.name }}-deployment
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      component: {{ .Values.app.component }}
+  template:
+    metadata: 
+      labels:
+        component: {{ .Values.app.component }}
+    spec:
+      containers:
+        - name: conv-app
+          image: antonlarichev/conv-app:1.2
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: {{ .Values.app.port }}
+          resources:
+            limits: {{ .Values.app.limits | toYaml | nindent 14 }}
