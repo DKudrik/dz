@@ -1,0 +1,8 @@
+app:
+  name: conv-app
+  version: 1
+  component: frontend
+  port: 80
+  limits:
+    memory: "128Mi"
+    cpu: "500m"
